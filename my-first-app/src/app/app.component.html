@@ -1,1 +1,26 @@
-<h1>Im in the AppComponent!</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Im in the AppComponent!</h1>
+            <hr>
+            <!-- this one if you select the selector by it's name-->
+            <app-servers></app-servers>
+            <!-- This one is you select the component by [] -->
+            <!-- <div app-servers></div> -->
+            <!-- This one is you select by class -->
+            <!-- <div class="app-servers"></div> -->
+
+
+            <button class="btn btn-primary"(click)="onToggleDetails()">Display Details</button>
+            <p *ngIf="showSecret">Secret password= lalo</p>
+            <div
+                *ngFor="let logItem of log;let i =index"
+                [ngStyle] ="{backgroundColor:i>=4?'blue':'transparent'}"
+                [ngClass]="{'white-text':i>=4}">
+                    {{logItem}}
+            </div>
+
+
+        </div>
+    </div>
+</div>
