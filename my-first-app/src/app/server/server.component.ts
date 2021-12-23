@@ -6,7 +6,6 @@ import { Component } from "@angular/core";
     styles:[`
         .online{
             color:white;
-
         }
  
     `]
