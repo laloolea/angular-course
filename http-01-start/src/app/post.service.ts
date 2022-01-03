@@ -20,7 +20,7 @@ export class PostService{
           {
             observe:'response'
           }
-      )
+      ) 
       .subscribe(responseData=>{
           console.log(responseData);
       },error=>{
