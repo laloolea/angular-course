@@ -1,12 +1,13 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, tap } from "rxjs";
+import { exhaustMap, map, take, tap } from "rxjs";
+import { AuthService } from "../auth/auth.service";
 import { Recipe } from "../recipes/recipe.model";
 import { RecipeService } from "../recipes/recipe.service";
 
 @Injectable({providedIn:'root'})
 export class DataStorageService {
-    constructor(private http: HttpClient,private recipesService:RecipeService){
+    constructor(private http: HttpClient,private recipesService:RecipeService,private authService:AuthService){
 
     }
     //Post
@@ -19,9 +20,12 @@ export class DataStorageService {
     }
     //Get
     fetchRecipes(){
-        return this.http
-            .get<Recipe[]>('https://firstproject-6ff30-default-rtdb.firebaseio.com/recipes.json')
-            .pipe(map(recipes=>{ //Rxjs operator map
+        
+        return this.http.get<Recipe[]>(
+            'https://firstproject-6ff30-default-rtdb.firebaseio.com/recipes.json?'
+        )
+        .pipe(
+            map(recipes=>{ //Rxjs operator map
                 return recipes.map(recipe=>{
                     return {
                         ...recipe,
@@ -29,10 +33,12 @@ export class DataStorageService {
                     };
                 });//On Array normal map methor javascript
             }),
-            tap(recipes=>{
+            tap(recipes=>{  
                 this.recipesService.setRecipes(recipes);
             })
-            );
+        );
+       
+    
 
     }
 
