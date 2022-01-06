@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
+import { LoggingService } from '../logging.service';
 
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
@@ -14,7 +15,7 @@ export class ShoppingListComponent implements OnInit {
   ingredients: Ingredient[];
 
   private subscription:Subscription;
-  constructor(private slService:ShoppingListService) { }
+  constructor(private slService:ShoppingListService,private loggingService:LoggingService) { }
 
   ngOnInit() {
     this.ingredients= this.slService.getIngredients();
@@ -24,6 +25,8 @@ export class ShoppingListComponent implements OnInit {
           this.ingredients= ingredients
         }
       )
+
+    this.loggingService.printLog("Hellpo from ShoppingList Component ngOnInit!");
   }
   onEditItem(index:number){
     this.slService.startedEditing.next(index);
